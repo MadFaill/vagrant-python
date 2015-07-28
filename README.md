@@ -6,3 +6,5 @@ Simplest vagrant-puppet-python example with UWSGI &amp; Flask
 - Install Vagrant
 - Clone this repo
 - Run: vagrant up
+
+- Go to: http://host.local/
