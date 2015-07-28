@@ -1,10 +1,9 @@
-VAGRANTFILE_API_VERSION = "2"
+VAGRANT_API_VERSION = "2"
 VAGRANT_DEFAULT_PROVIDER = "virtualbox"
 PROVISION_PATH = "provision"
 
 @ui = Vagrant::UI::Colored.new
-
-Vagrant.require_version ">= 1.7.2"
+Vagrant.require_version ">= #{VAGRANT_API_VERSION}"
 
 plugins = [
     'vagrant-hostsupdater',
@@ -19,7 +18,7 @@ plugins.each do |plugin|
     end
 end
 
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+Vagrant.configure(VAGRANT_API_VERSION) do |config|
 
     config.package.name = 'rn-ubuntu.box'
     config.vm.box       = 'phusion/ubuntu-12.04-amd64'
