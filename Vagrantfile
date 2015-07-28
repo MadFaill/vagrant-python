@@ -3,7 +3,7 @@ VAGRANT_DEFAULT_PROVIDER = "virtualbox"
 PROVISION_PATH = "provision"
 
 @ui = Vagrant::UI::Colored.new
-Vagrant.require_version ">= #{VAGRANT_API_VERSION}"
+Vagrant.require_version ">= 1.7.2"
 
 plugins = [
     'vagrant-hostsupdater',
