@@ -78,4 +78,9 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
   config.hostsupdater.remove_on_suspend = true
 
+  # ansible example (commented)
+#   config.vm.provision :ansible do |ansible|
+#     ansible.playbook = "#{PROVISION_PATH}/ansible/playbook.yml"
+#   end
+
 end

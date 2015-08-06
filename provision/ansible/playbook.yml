@@ -1,0 +1,44 @@
+---
+- hosts: all
+  user: vagrant
+  sudo: True
+  tasks:
+    - name: Update apt
+      apt: update_cache=yes cache_valid_time=3600
+
+    - name: Install apt packages
+      apt: name='{{ item }}'
+      with_items:
+        - build-essential
+        - libxml2-dev
+        - libxslt1-dev
+        - python-dev
+        - python-pip
+        - postgresql
+        - libpq-dev
+
+    - name: Install pip packages
+      pip: name='{{ item.name }}' version='{{ item.version }}' use_mirrors=yes
+      with_items:
+        - { name: 'flake8', version: '2.2.5' }
+        - { name: 'lxml', version: '3.4.0' }
+        - { name: 'psycopg2', version: '2.5.4' }
+        - { name: 'wsgiref', version: '0.1.2' }
+
+    - name: Close eyes on password presence when connecting to PostgreSQL
+      sudo: yes
+      replace: dest=/etc/postgresql/9.1/main/pg_hba.conf regexp="^local\s+all\s+postgres\s+peer$" replace="local\tall\t\tpostgres\t\t\t\ttrust"
+      notify:
+        - Restart PostgreSQL
+
+    - name: Create PostgreSQL database
+      sudo: yes
+      sudo_user: postgres
+      postgresql_db: name=service_base
+
+    - name: Start PostgreSQL service
+      service: name=postgresql state=started
+
+  handlers:
+    - name: Restart PostgreSQL
+      action: service name=postgresql state=restarted
